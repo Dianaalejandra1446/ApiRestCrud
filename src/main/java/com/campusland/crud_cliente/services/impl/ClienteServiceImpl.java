@@ -47,11 +47,17 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public void update(Long id) {
-        Optional<Cliente> buscarCliente=repositoryCliente.findById(id);
+    public void update(Long id, Cliente clienteActualizado) {
+        Optional<Cliente> buscarCliente = repositoryCliente.findById(id);
         if (buscarCliente.isPresent()) {
-            repositoryCliente.save()
+            Cliente clienteExistente = buscarCliente.get();
+            clienteExistente.setNombre(clienteActualizado.getNombre());
+            clienteExistente.setApellido(clienteActualizado.getApellido());
+            clienteExistente.setEmail(clienteActualizado.getEmail());
+            clienteExistente.setCreateAt(clienteActualizado.getCreateAt());
+            repositoryCliente.save(clienteExistente);
         }
     }
+    
     
 }
