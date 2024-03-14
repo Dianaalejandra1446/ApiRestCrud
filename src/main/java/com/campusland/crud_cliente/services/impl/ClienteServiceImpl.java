@@ -3,7 +3,6 @@ package com.campusland.crud_cliente.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

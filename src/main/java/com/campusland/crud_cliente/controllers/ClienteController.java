@@ -40,9 +40,14 @@ public class ClienteController {
         return clienteService.save(cliente);
     }
     
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         clienteService.delete(id);
+    }
+     
+    @PostMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestBody Cliente clienteActualizado){
+        clienteService.update(id, clienteActualizado);
     }
     
 }
