@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,10 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /*No permitir valores nulos */
+    @NotEmpty(message = "El nombre no puede estar vacio")
     @Column(nullable = false)
     private String nombre;
+    @NotEmpty(message = "El apellido no puede estar vacio")
     @Column(nullable = false)
     private String apellido;
     @Column(nullable = false,unique = true)
