@@ -15,6 +15,8 @@ public interface ClienteService {
 
     void delete(Long id);
 
-    void update(Long id,Cliente clienteActualizado);
+    /* void update(Long id,Cliente clienteActualizado); */
+    Cliente update(Long id,Cliente cliente);
 
+    Cliente findByEmail(String email);
 }

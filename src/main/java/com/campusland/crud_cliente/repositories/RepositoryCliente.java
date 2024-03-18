@@ -6,5 +6,5 @@ import com.campusland.crud_cliente.repositories.entities.Cliente;
 
 // La interface se comporta como un bean
 public interface RepositoryCliente extends CrudRepository<Cliente,Long>{
-    
+    Cliente findByEmail(String email);
 }

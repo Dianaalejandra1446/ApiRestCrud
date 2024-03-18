@@ -45,8 +45,8 @@ public class ClienteServiceImpl implements ClienteService{
         }
     }
 
+    /*     public void update(Long id, Cliente clienteActualizado) {
     @Override
-    public void update(Long id, Cliente clienteActualizado) {
         Optional<Cliente> buscarCliente = repositoryCliente.findById(id);
         if (buscarCliente.isPresent()) {
             Cliente clienteExistente = buscarCliente.get();
@@ -56,6 +56,27 @@ public class ClienteServiceImpl implements ClienteService{
             clienteExistente.setCreateAt(clienteActualizado.getCreateAt());
             repositoryCliente.save(clienteExistente);
         }
+    } */
+    @Override
+    public Cliente update(Long id, Cliente cliente) {
+       Optional<Cliente> clienteCurrentOptional=repositoryCliente.findById(id);
+
+       if(clienteCurrentOptional.isPresent()){
+          Cliente clienteCurrent=clienteCurrentOptional.get();
+          clienteCurrent.setNombre(cliente.getNombre());
+          clienteCurrent.setApellido(cliente.getApellido());
+          clienteCurrent.setEmail(cliente.getEmail()); 
+          repositoryCliente.save(clienteCurrent);
+          return clienteCurrent;         
+       }
+
+       return null;    
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Cliente findByEmail(String email) {
+        return repositoryCliente.findByEmail(email);
     }
     
     

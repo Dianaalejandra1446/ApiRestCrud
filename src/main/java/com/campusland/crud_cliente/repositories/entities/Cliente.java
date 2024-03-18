@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Cliente {
     @NotEmpty(message = "El apellido no puede estar vacio")
     @Column(nullable = false)
     private String apellido;
+    @Email(message="No cumple con el formato de una cuenta de correo")
     @Column(nullable = false,unique = true)
     private String email;
     @Column(name ="create_at")
