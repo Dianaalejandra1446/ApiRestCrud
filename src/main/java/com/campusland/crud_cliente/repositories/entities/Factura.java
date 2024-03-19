@@ -1,5 +1,9 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.time.LocalDate;
+
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,14 +19,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "students")
-public class Student {
+@Table(name = "factura")
+public class Factura {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long numero_factura;
+    private LocalDate fecha;
+    private String descripcion;
 
-    private String name;
     @ManyToOne()
-    @JoinColumn(name = "university_id")
-    private University university;
+    private Cliente cliente;
+
+    @ManyToOne()
+    @JoinColumn(name = "itemFactura_id")
+    private ItemFactura itemFactura;
 }

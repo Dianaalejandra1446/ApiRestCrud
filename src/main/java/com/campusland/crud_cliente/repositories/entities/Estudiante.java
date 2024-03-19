@@ -1,6 +1,5 @@
 package com.campusland.crud_cliente.repositories.entities;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
