@@ -3,6 +3,8 @@ package com.campusland.crud_cliente.repositories.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,19 +30,21 @@ import lombok.NoArgsConstructor;
 public class Factura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String descripcion;
     private String observacion;
-    
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "factura_id")
-    private  List<ItemFactura> items;
-    
-    @ManyToOne(fetch=FetchType.LAZY)
-    private Cliente cliente;
-    
-    @Column(name = "create_at")
+
+    @Column(name="create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="factura_id")
+    private List<ItemFactura> items;
+    
+    @JsonIgnoreProperties(value={"facturas", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Cliente cliente;
 }

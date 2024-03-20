@@ -18,10 +18,10 @@ VALUES ('Hewlett Packard Multifuncional F2280', 22.99, 15.99,NOW());
 /* Creamos algunas facturas */
 INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES('Factura equipos de oficina', null, 1, NOW());
 
-INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1, 1, 1);
-INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(2, 1, 4);
-INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1, 1, 5);
-INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(1, 1, 3);
+INSERT INTO factura_items (cantidad, factura_id, producto_id) VALUES(1, 1, 1);
+INSERT INTO factura_items (cantidad, factura_id, producto_id) VALUES(2, 1, 4);
+INSERT INTO factura_items (cantidad, factura_id, producto_id) VALUES(1, 1, 5);
+INSERT INTO factura_items (cantidad, factura_id, producto_id) VALUES(1, 1, 3);
 
 INSERT INTO facturas (descripcion, observacion, cliente_id, create_at) VALUES('Factura Bicicleta', 'Alguna nota importante!', 1, NOW());
 INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3, 2, 2);
