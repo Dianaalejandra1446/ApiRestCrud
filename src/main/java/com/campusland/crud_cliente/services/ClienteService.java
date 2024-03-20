@@ -4,6 +4,8 @@ package com.campusland.crud_cliente.services;
 import java.util.List;
 
 import com.campusland.crud_cliente.repositories.entities.Cliente;
+import com.campusland.crud_cliente.repositories.entities.Factura;
+import com.campusland.crud_cliente.repositories.entities.Producto;
 
 
 public interface ClienteService {
@@ -19,4 +21,14 @@ public interface ClienteService {
     Cliente update(Long id,Cliente cliente);
 
     Cliente findByEmail(String email);
+
+    Factura findFacturaById (Long id);
+
+    List<Factura> finFacturaAll();
+
+    Factura save(Factura factura);
+
+    void deleteFacturaBydId(Long id);
+
+    List<Producto> findProductoByNombre(String term);
 }
