@@ -25,7 +25,9 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
     private String nombre;
+    @Column(name="precio_venta")
     private double precioVenta;
+    @Column(name="precio_compra")
     private double precioCompra;
     @Column(name="create_at")
     @Temporal(TemporalType.DATE)
