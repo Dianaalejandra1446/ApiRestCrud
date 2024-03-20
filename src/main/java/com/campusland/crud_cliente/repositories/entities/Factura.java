@@ -30,17 +30,17 @@ public class Factura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String descripcion;
+    private String observacion;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "factura_id")
+    private  List<ItemFactura> items;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Cliente cliente;
+    
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
-    private String descripcion;
-    private String observacion;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "itemFactura_id")
-    private  List<ItemFactura> items;
-
-    @ManyToOne(fetch=FetchType.LAZY)
-    private Cliente cliente;
-
 }
