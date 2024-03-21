@@ -1,5 +1,6 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,16 +19,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "facturas")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Factura {
+public class Factura  implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -17,10 +19,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tuition")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Tuition {
+public class Tuition implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

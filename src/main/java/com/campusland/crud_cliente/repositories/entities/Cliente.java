@@ -1,5 +1,6 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,9 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="clientes")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Cliente {
+public class Cliente implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

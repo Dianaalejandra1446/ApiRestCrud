@@ -1,5 +1,6 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -17,10 +18,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "productos")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Producto {
+public class Producto implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;

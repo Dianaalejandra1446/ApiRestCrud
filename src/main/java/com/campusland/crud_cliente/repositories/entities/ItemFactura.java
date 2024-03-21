@@ -1,5 +1,7 @@
 package com.campusland.crud_cliente.repositories.entities;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "factura_items")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ItemFactura {
+public class ItemFactura implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     private Long id;
