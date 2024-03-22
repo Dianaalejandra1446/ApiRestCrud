@@ -14,5 +14,10 @@ public class ItemFacturaDTOConverte {
         if (itemFactura.getProducto() != null) {
             itemFacturaDTO.setProducto_id(itemFactura.getProducto().getCodigo());
         }
+        return itemFacturaDTO;
+    }
+
+    public ItemFactura coverItemFactura(ItemFacturaDTO itemFacturaDTO){
+        return dbm.map(itemFacturaDTO,ItemFactura.class);
     }
 }
