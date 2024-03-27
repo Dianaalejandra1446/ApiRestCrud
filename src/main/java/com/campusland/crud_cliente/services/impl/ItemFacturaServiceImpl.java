@@ -1,27 +1,43 @@
 package com.campusland.crud_cliente.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.campusland.crud_cliente.Configuracion.ItemFacturaDTOConverte;
 import com.campusland.crud_cliente.Dto.ItemFacturaDTO;
+import com.campusland.crud_cliente.repositories.RepositoryItemFactura;
+import com.campusland.crud_cliente.repositories.entities.ItemFactura;
 import com.campusland.crud_cliente.services.ItemFacturaServices;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class ItemFacturaServiceImpl implements ItemFacturaServices {
 
-    @Override
-    public ItemFacturaDTO save(ItemFacturaDTO itemFactura) {
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
+    @Autowired
+    // Repository Item Factura
+    private RepositoryItemFactura itemFacturaRepository;
+
+    @Autowired
+    // Convertir a DTO
+    private ItemFacturaDTOConverte convert;
 
     @Override
     public List<ItemFacturaDTO> findAll() {
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        //  Sobreescribir el metodo findAll
+        List<ItemFactura> itemFacturaEntity =(List<ItemFactura>) itemFacturaRepository.findAll();
+        // Lista de entidades
+        List<ItemFacturaDTO> itemFacturaDTO = new ArrayList<>();
+
+        for (ItemFactura itemF : itemFacturaEntity) {
+            itemFacturaDTO.add(convert.converItemFacturaDTO(itemF));
+        }
+        return itemFacturaDTO;
     }
 
-    @Override
-    public Optional<ItemFacturaDTO> findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
     
 }
