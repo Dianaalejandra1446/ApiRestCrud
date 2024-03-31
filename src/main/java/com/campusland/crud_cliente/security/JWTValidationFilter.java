@@ -3,8 +3,10 @@ package com.campusland.crud_cliente.security;
 import java.io.IOException;
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.campusland.crud_cliente.services.JWTService;
@@ -15,56 +17,56 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Filtro para validar tokens JWT en las solicitudes entrantes.
  */
+@Component
+@AllArgsConstructor
+@Slf4j
 public class JWTValidationFilter extends OncePerRequestFilter {
 
-    private final JWTService jwtService;
+ private final JWTService jwtService;
     private final JWTUserDetailService jwtUserDetailService;
 
-    private static final Logger log = LoggerFactory.getLogger(JWTValidationFilter.class);
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String AUTHORIZATION_HEADER_BEARER = "Bearer";
+    public static final String AUTHORIZATION_HEADER_BEARER = "Bearer ";
 
-    /**
-     * Constructor del filtro.
-     */
-    public JWTValidationFilter(JWTService jwtService, JWTUserDetailService jwtUserDetailService) {
-        this.jwtService = jwtService;
-        this.jwtUserDetailService = jwtUserDetailService;
-    }
-
-    /**
-     * Método principal para la lógica de filtrado.
-     */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        
-        // Obtener el encabezado de autorización de la solicitud
+    protected void doFilterInternal(HttpServletRequest request,
+                                                   HttpServletResponse response,
+                                                   FilterChain filterChain) throws ServletException, IOException {
         final var requestTokenHeader = request.getHeader(AUTHORIZATION_HEADER);
         String username = null;
         String jwt = null;
 
-        // Verificar si el encabezado de autorización comienza con "Bearer" y obtener el token JWT
-        if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith(AUTHORIZATION_HEADER_BEARER)) {
-            jwt = requestTokenHeader.substring(7); // Extraer el token JWT
+        if(Objects.nonNull(requestTokenHeader)
+                && requestTokenHeader.startsWith(AUTHORIZATION_HEADER_BEARER)) {
+            jwt = requestTokenHeader.substring(7);
+
             try {
-                // Obtener el nombre de usuario del token JWT
                 username = jwtService.getUsernameFromToken(jwt);
             } catch (IllegalArgumentException e) {
-                // Manejar errores al obtener el nombre de usuario del token JWT
-                log.error("Error al obtener el nombre de usuario del token JWT: {}", e.getMessage());
+                log.error(e.getMessage());
             } catch (ExpiredJwtException e) {
-                // Manejar advertencias de token JWT caducado
-                log.warn("Token JWT expirado: {}", e.getMessage());
+                log.warn(e.getMessage());
             }
         }
 
-        // Continuar con el filtro llamando al siguiente filtro en la cadena
+        if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            final var userDetails = this.jwtUserDetailService.loadUserByUsername(username);
+
+            if (this.jwtService.validateToken(jwt, userDetails)) {
+                var usernameAndPassAuthToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+
+                usernameAndPassAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(usernameAndPassAuthToken);
+            }
+        }
         filterChain.doFilter(request, response);
     }
 }

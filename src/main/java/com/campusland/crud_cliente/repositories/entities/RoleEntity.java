@@ -19,5 +19,5 @@ public class RoleEntity {
     private BigInteger id;
     @Column(name = "role_name")
     private String name;
-    private String descripction;
+    private String description;
 }
